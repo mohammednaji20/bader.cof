@@ -4,17 +4,23 @@
  * (instagram.com/bader.cof) وتطبيقات المرتبطة به.
  */
 
+/** بادئة المسارات: تعمل محلياً ('/') وعلى GitHub Pages ('/bader.cof/') */
+const BASE = import.meta.env.BASE_URL;
+
 export const IMAGES = {
-  logo: '/images/logo.jpg',
-  sign: '/images/sign.jpg',
-  latte: '/images/latte.jpg',
-  iced: '/images/iced-coffee.jpg',
-  pink: '/images/pink-drink.jpg',
-  carpet1: '/images/carpet-1.jpg',
-  carpet2: '/images/carpet-2.jpg',
-  mirror: '/images/mirror.jpg',
-  nationalDay: '/images/national-day.jpg',
+  logo: `${BASE}images/logo.jpg`,
+  sign: `${BASE}images/sign.jpg`,
+  latte: `${BASE}images/latte.jpg`,
+  iced: `${BASE}images/iced-coffee.jpg`,
+  pink: `${BASE}images/pink-drink.jpg`,
+  carpet1: `${BASE}images/carpet-1.jpg`,
+  carpet2: `${BASE}images/carpet-2.jpg`,
+  mirror: `${BASE}images/mirror.jpg`,
+  nationalDay: `${BASE}images/national-day.jpg`,
 } as const;
+
+/** مُساعد عام لمسارات الصور داخل ملف المنيو */
+export const image = (file: string) => `${BASE}images/${file}`;
 
 export const links = {
   instagram: 'https://www.instagram.com/bader.cof/',

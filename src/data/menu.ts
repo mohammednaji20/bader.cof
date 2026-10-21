@@ -10,6 +10,8 @@
  * - حقل image اختياري؛ العناصر الأخرى ستظهر بهوية تنسيقية أنيقة.
  */
 
+import { image } from './site';
+
 export type Bilingual = { ar: string; en: string };
 
 export type CategoryId = 'hot' | 'iced' | 'signature';
@@ -46,7 +48,7 @@ export const menuItems: MenuItem[] = [
       ar: 'رغوة مخملية وفن لاتيه مرسوم بحب — الكوب المشهور من واجهتنا.',
       en: 'Velvet milk foam with hand-poured latte art — the famous cup from our gallery.',
     },
-    image: '/images/latte.jpg',
+    image: image('latte.jpg'),
   },
   {
     id: 'hot-espresso',
@@ -85,7 +87,7 @@ export const menuItems: MenuItem[] = [
       ar: 'إسبريسو بارد على ثلج خشن — كما في صورتنا على الطاولة.',
       en: 'Cold espresso over fresh ice — straight from our photo.',
     },
-    image: '/images/iced-coffee.jpg',
+    image: image('iced-coffee.jpg'),
   },
   {
     id: 'iced-latte',
@@ -115,7 +117,7 @@ export const menuItems: MenuItem[] = [
       ar: 'ورديّ منعش بأوراق نعناع ولمسة ليمون — من قائمتنا المميزة.',
       en: 'A refreshing rosy drink with mint leaves and a bright lemon touch.',
     },
-    image: '/images/pink-drink.jpg',
+    image: image('pink-drink.jpg'),
   },
   {
     id: 'sig-night',
@@ -134,6 +136,6 @@ export const menuItems: MenuItem[] = [
       ar: 'كوب يحتفل بالمناسبات الوطنية والمواسم — تابع انستقرام لأول الإصدارات.',
       en: 'Seasons and national days get their own cup — stay tuned on Instagram.',
     },
-    image: '/images/national-day.jpg',
+    image: image('national-day.jpg'),
   },
 ];
