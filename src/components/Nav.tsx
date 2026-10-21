@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLang } from '../i18n';
 import { useScrolled } from '../hooks/interactions';
 import { IMAGES } from '../data/site';
+import { CartButton } from '../state/cart';
 import type { Lang } from '../i18n';
 
 const SECTIONS = [
@@ -55,6 +56,7 @@ export function Nav() {
           >
             {t.nav.switchTo}
           </button>
+          <CartButton />
           <a href="#menu" className="btn btn--gold nav__cta">
             {t.nav.cta}
           </a>

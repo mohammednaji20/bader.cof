@@ -1,5 +1,6 @@
 import { LanguageProvider, useLang } from './i18n';
 import { useRevealObserver } from './hooks/interactions';
+import { CartProvider, CartView, WhatsAppFab } from './state/cart';
 import { Nav } from './components/Nav';
 import { Hero } from './components/Hero';
 import { Marquee } from './components/Marquee';
@@ -49,7 +50,11 @@ function Site() {
 export default function App() {
   return (
     <LanguageProvider>
-      <Site />
+      <CartProvider>
+        <Site />
+        <CartView />
+        <WhatsAppFab />
+      </CartProvider>
     </LanguageProvider>
   );
 }

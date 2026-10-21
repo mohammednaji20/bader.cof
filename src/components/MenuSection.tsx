@@ -7,6 +7,9 @@ import {
   type MenuItem,
 } from '../data/menu';
 import { QUICK_VIEW_EVENT } from '../events/quickview';
+import { whatsappConfigured, whatsappLink } from '../data/site';
+import { orderMessage } from '../utils/whatsapp';
+import { useCart } from '../state/cart';
 import { StarEight } from './Decor';
 import { useLockScroll } from '../hooks/interactions';
 
@@ -50,6 +53,7 @@ function FilterChip({
 /** نافذة العرض السريع (تُستنسخ لكل منتج عبر key=id) */
 function QuickView({ item, onClose }: { item: MenuItem; onClose: () => void }) {
   const { lang, t } = useLang();
+  const { add } = useCart();
   const catLabel =
     menuCategories.find((c) => c.id === item.category)?.label[lang] ?? '';
 
@@ -97,7 +101,31 @@ function QuickView({ item, onClose }: { item: MenuItem; onClose: () => void }) {
             <span>{t.menu.priceNote}</span>
             <StarEight className="modal__star" />
           </div>
-          <p className="modal__note">{t.menu.modalNote}</p>
+
+          <div className="modal__actions">
+            <a
+              className="btn btn--wa"
+              href={whatsappLink(orderMessage([{ name: item.name[lang], qty: 1 }], '', lang))}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {t.cart.orderNow}
+            </a>
+            <button
+              type="button"
+              className="btn btn--green"
+              onClick={() => {
+                add(item.id);
+                onClose();
+              }}
+            >
+              {t.cart.add}
+            </button>
+          </div>
+
+          <p className="modal__note">
+            {whatsappConfigured ? t.menu.modalNote : t.cart.unconfigured}
+          </p>
         </div>
       </div>
     </div>
@@ -106,6 +134,7 @@ function QuickView({ item, onClose }: { item: MenuItem; onClose: () => void }) {
 
 export function MenuSection() {
   const { lang, t } = useLang();
+  const { add } = useCart();
   const [cat, setCat] = useState<CategoryId | 'all'>('all');
   const [selected, setSelected] = useState<MenuItem | null>(null);
 
@@ -144,37 +173,55 @@ export function MenuSection() {
 
       <div className="menu__grid">
         {items.map((item, i) => (
-          <button
-            type="button"
-            key={item.id}
-            className={`menu__card ${item.image ? 'menu__card--photo' : ''}`}
-            data-reveal=""
-            style={{ '--rd': `${(i % 3) * 90}ms` } as CSSProperties}
-            onClick={() => setSelected(item)}
-          >
-            {item.image ? (
-              <span className="menu__thumb arch">
-                <img src={item.image} alt={item.name[lang]} loading="lazy" decoding="async" />
-              </span>
-            ) : (
-              <span className="menu__thumb arch menu__thumb--flat">
-                <CupTexture label={item.name[lang]} />
-              </span>
-            )}
-            <span className="menu__info">
-              <span className="menu__name">{item.name[lang]}</span>
-              <span className="menu__desc">{item.desc[lang]}</span>
-              <span className="menu__row">
-                <span className="menu__cat">
-                  {menuCategories.find((c) => c.id === item.category)?.label[lang]}
+          <div className="menu__cell" key={item.id}>
+            <button
+              type="button"
+              className={`menu__card ${item.image ? 'menu__card--photo' : ''}`}
+              data-reveal=""
+              style={{ '--rd': `${(i % 3) * 90}ms` } as CSSProperties}
+              onClick={() => setSelected(item)}
+            >
+              {item.image ? (
+                <span className="menu__thumb arch">
+                  <img src={item.image} alt={item.name[lang]} loading="lazy" decoding="async" />
                 </span>
-                <span className="menu__price">{t.menu.priceNote}</span>
+              ) : (
+                <span className="menu__thumb arch menu__thumb--flat">
+                  <CupTexture label={item.name[lang]} />
+                </span>
+              )}
+              <span className="menu__info">
+                <span className="menu__name">{item.name[lang]}</span>
+                <span className="menu__desc">{item.desc[lang]}</span>
+                <span className="menu__row">
+                  <span className="menu__cat">
+                    {menuCategories.find((c) => c.id === item.category)?.label[lang]}
+                  </span>
+                  <span className="menu__price">{t.menu.priceNote}</span>
+                </span>
               </span>
-            </span>
-            <span className="menu__quick" aria-hidden="true">
-              {t.menu.quickView}
-            </span>
-          </button>
+              <span className="menu__quick" aria-hidden="true">
+                {t.menu.quickView}
+              </span>
+            </button>
+            <button
+              type="button"
+              className="menu__addcart"
+              onClick={() => add(item.id)}
+              aria-label={`${t.cart.add} — ${item.name[lang]}`}
+              title={t.cart.add}
+            >
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                <path
+                  d="M12 5v14M5 12h14"
+                  stroke="currentColor"
+                  strokeWidth="2.2"
+                  strokeLinecap="round"
+                  fill="none"
+                />
+              </svg>
+            </button>
+          </div>
         ))}
       </div>
 

@@ -88,6 +88,23 @@ export interface Strings {
     hoursNote: string;
     mapHint: string;
   };
+  cart: {
+    open: string;
+    title: string;
+    empty: string;
+    emptyHint: string;
+    browse: string;
+    clear: string;
+    remove: string;
+    noteTitle: string;
+    notePh: string;
+    send: string;
+    unconfigured: string;
+    close: string;
+    add: string;
+    orderNow: string;
+    direct: string;
+  };
   footer: {
     line: string;
     slogan: string;
@@ -205,8 +222,26 @@ const ar: Strings = {
     hoursNote: 'التوقيتات بناءً على صفحتنا — قابلة للتأكيد قبل الزيارة.',
     mapHint: 'مو واضح الوقت؟ اضغط على الزر وستوصلك الخرائط.',
   },
+  cart: {
+    open: 'سلة الطلب',
+    title: 'سلة طلبك',
+    empty: 'سلتك فاضية',
+    emptyHint: 'بادر وأضف أول كوب من المنيو.',
+    browse: 'تصفح المنيو',
+    clear: 'تفريغ السلة',
+    remove: 'إزالة من السلة',
+    noteTitle: 'ملاحظة للمطبخ (اختياري)',
+    notePh: 'مثال: بدون سكر، ورغوة ثقيلة…',
+    send: 'أرسل الطلب على واتساب',
+    unconfigured:
+      'الواتساب لم يُضبط بعد — يفتح حالياً انستقرام الرسمي. ضع الرقم في src/data/site.ts ليعمل واتساب مباشرة.',
+    close: 'إغلاق السلة',
+    add: 'أضف إلى السلة',
+    orderNow: 'اطلب عبر واتساب',
+    direct: 'رسالة واتساب مباشرة',
+  },
   footer: {
-    line: 'في كل صبح، بادر',
+    line: 'في كل صباح، بادر',
     slogan: 'وصالح نفسك بالقهوة قبل أن تواجه العالم.',
     navigate: 'أقسام',
     connect: 'تواصل معنا',
@@ -309,6 +344,24 @@ const en: Strings = {
     maps: 'Open location on Google Maps',
     hoursNote: 'Hours from our profile — please confirm before visiting.',
     mapHint: 'Tap the button and Google Maps will take you there.',
+  },
+  cart: {
+    open: 'Order cart',
+    title: 'Your order',
+    empty: 'Your cart is empty',
+    emptyHint: 'Begin — add your first cup from the menu.',
+    browse: 'Browse the menu',
+    clear: 'Clear cart',
+    remove: 'Remove from cart',
+    noteTitle: 'A note for the kitchen (optional)',
+    notePh: 'e.g. no sugar, extra foam…',
+    send: 'Send order on WhatsApp',
+    unconfigured:
+      'WhatsApp is not set up yet — Instagram opens for now. Add the number in src/data/site.ts to enable WhatsApp.',
+    close: 'Close cart',
+    add: 'Add to cart',
+    orderNow: 'Order via WhatsApp',
+    direct: 'Direct WhatsApp message',
   },
   footer: {
     line: 'Every morning — start',
