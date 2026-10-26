@@ -4,17 +4,21 @@ export const prefersReducedMotion = () =>
   typeof window !== 'undefined' &&
   window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-/** يضيف صنف is-in لكل عنصر [data-reveal] عند ظهوره بلطف */
+/** يضيف صنف is-in لكل عنصر [data-reveal] عند ظهوره بلطف — حتى العناصر اللاحقة (نوافذ منبثقة) */
 export function useRevealObserver() {
   useEffect(() => {
-    const reduced = prefersReducedMotion();
-    const targets = Array.from(
-      document.querySelectorAll<HTMLElement>('[data-reveal]'),
-    );
-    if (reduced) {
-      targets.forEach((el) => el.classList.add('is-in'));
-      return;
+    if (prefersReducedMotion()) {
+      // تقليل الحركة: أظهر كل شيء فوراً، بما فيه العناصر اللاحقة
+      const markAll = () =>
+        document
+          .querySelectorAll('[data-reveal]')
+          .forEach((el) => el.classList.add('is-in'));
+      markAll();
+      const mo = new MutationObserver(() => markAll());
+      mo.observe(document.body, { childList: true, subtree: true });
+      return () => mo.disconnect();
     }
+
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -26,8 +30,32 @@ export function useRevealObserver() {
       },
       { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
     );
-    targets.forEach((el) => io.observe(el));
-    return () => io.disconnect();
+
+    // التقاط عناصر جديدة (نافذة المنتج، اللايت بوكس…) عند إضافتها للشجرة
+    const mo = new MutationObserver((records) => {
+      records.forEach((rec) => {
+        rec.addedNodes.forEach((node) => {
+          if (!(node instanceof HTMLElement) || node.tagName === 'HEAD') return;
+          const targets: Element[] = node.matches('[data-reveal]')
+            ? [node]
+            : Array.from(node.querySelectorAll('[data-reveal]'));
+          targets.forEach((el) => {
+            if (!el.classList.contains('is-in')) io.observe(el);
+          });
+        });
+      });
+    });
+
+    document
+      .querySelectorAll<HTMLElement>('[data-reveal]')
+      .forEach((el) => io.observe(el));
+
+    mo.observe(document.body, { childList: true, subtree: true });
+
+    return () => {
+      io.disconnect();
+      mo.disconnect();
+    };
   }, []);
 }
 

@@ -77,7 +77,7 @@ function QuickView({ item, onClose }: { item: MenuItem; onClose: () => void }) {
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="modal__panel" data-reveal="">
+      <div className="modal__panel">
         <button type="button" className="modal__close" onClick={onClose} aria-label={t.menu.close} autoFocus>
           ✕
         </button>

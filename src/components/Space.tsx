@@ -86,7 +86,7 @@ export function Space() {
             </svg>
           </button>
 
-          <figure className="lightbox__stage" data-reveal="">
+          <figure className="lightbox__stage">
             <img src={current.src} alt={current.alt[lang]} decoding="async" />
             <figcaption>
               {current.caption[lang]}
